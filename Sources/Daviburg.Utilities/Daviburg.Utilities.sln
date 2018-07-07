@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daviburg.Utilities", "Daviburg.Utilities\Daviburg.Utilities.csproj", "{6F57FC32-46D2-4EA7-8CD7-B31078D74923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daviburg.Utilities.Tests", "..\..\Tests\Daviburg.Utilities.Tests\Daviburg.Utilities.Tests.csproj", "{020B6349-1DC7-4753-B68A-F1AE1CDF13BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F57FC32-46D2-4EA7-8CD7-B31078D74923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F57FC32-46D2-4EA7-8CD7-B31078D74923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F57FC32-46D2-4EA7-8CD7-B31078D74923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F57FC32-46D2-4EA7-8CD7-B31078D74923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020B6349-1DC7-4753-B68A-F1AE1CDF13BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020B6349-1DC7-4753-B68A-F1AE1CDF13BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020B6349-1DC7-4753-B68A-F1AE1CDF13BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020B6349-1DC7-4753-B68A-F1AE1CDF13BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F8DBBFE-0375-4811-9234-2A34CA1B80B8}
+	EndGlobalSection
+EndGlobal
