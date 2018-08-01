@@ -120,5 +120,39 @@ namespace Daviburg.Utilities
 
             return this[primeIndex];
         }
+
+        /// <summary>
+        /// Finds the smallest number that is a multiple of all the positive integral numbers up to the specified value
+        /// </summary>
+        /// <param name="value">The upper limit of integers which must all be quotients of the result.</param>
+        public long SmallestMultipleOfAllNumbersTo(int value)
+        {
+            // All the prime numbers that are less than the square root of our upper limit value may result in non prime quotients if dividing our result
+            // so that all the numbers are quotients of the result. Greater prime numbers are never needed to match non prime quotients,
+            // so we will only need them at 'power 1'.
+            var ceiling = Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
+            var multiple = (long)1;
+
+            // All the prime numbers that are less or equal to our upper limit value must be quotients of our result,
+            // so this is the upper limit of our iteration.
+            for (var index = 0; this[index] <= value; index++)
+            {
+                if (this[index] <= ceiling)
+                {
+                    // We need the prime number to match as many non prime quotients of our result value as possible.
+                    // Hence prime power x is less than value
+                    // Hence x times log10 prime is less than log10 value
+                    // Hence x (integer) is floor of log10 value divided by log10 prime
+                    multiple *= Convert.ToInt64(Math.Pow(this[index], Math.Floor(Math.Log10(value) / Math.Log10(this[index]))));
+                }
+                else
+                {
+                    // 'power 1' - this prime is too large to 'form' other non-prime quotients less or equal to value
+                    multiple *= this[index];
+                }
+            }
+
+            return multiple;
+        }
     }
 }

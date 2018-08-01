@@ -51,5 +51,18 @@ namespace Daviburg.Utilities.Tests
             // Next values are sanitized to not spoil some online challenge
             //// Assert.AreEqual(expected: *sanitized*, actual: Primes.Singleton.LargestPrimeFactorOf(*sanitized*));
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SmallestMultipleOfAllNumbersToTests()
+        {
+            Assert.AreEqual(expected: 2, actual: Primes.Singleton.SmallestMultipleOfAllNumbersTo(2));
+            Assert.AreEqual(expected: 6, actual: Primes.Singleton.SmallestMultipleOfAllNumbersTo(3));
+            Assert.AreEqual(expected: 12, actual: Primes.Singleton.SmallestMultipleOfAllNumbersTo(4));
+            Assert.AreEqual(expected: 2520, actual: Primes.Singleton.SmallestMultipleOfAllNumbersTo(10));
+
+            // Next values are sanitized to not spoil some online challenge
+            //// Assert.AreEqual(expected: *sanitized*, actual: Primes.Singleton.SmallestMultipleOfAllNumbersTo(*sanitized*));
+        }
     }
 }
