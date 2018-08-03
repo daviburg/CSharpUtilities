@@ -19,6 +19,7 @@
 
 namespace Daviburg.Utilities.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -82,6 +83,45 @@ namespace Daviburg.Utilities.Tests
 
             candidates.Sort();
             //// Assert.AreEqual(*sanitized*, candidates[0]);
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SummationSimpleTests()
+        {
+            Assert.AreEqual(0, 0.Summation());
+            Assert.AreEqual(1, 1.Summation());
+            Assert.AreEqual(3, 2.Summation());
+            Assert.AreEqual(6, 3.Summation());
+            Assert.AreEqual(10, 4.Summation());
+            Assert.AreEqual(15, 5.Summation());
+            Assert.AreEqual(21, 6.Summation());
+            Assert.AreEqual(55, 10.Summation());
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SquareSummationSimpleTests()
+        {
+            Assert.AreEqual(0, 0.SquareSummation());
+            Assert.AreEqual(1, 1.SquareSummation());
+            Assert.AreEqual(5, 2.SquareSummation());
+            Assert.AreEqual(14, 3.SquareSummation());
+            Assert.AreEqual(30, 4.SquareSummation());
+            Assert.AreEqual(55, 5.SquareSummation());
+            Assert.AreEqual(91, 6.SquareSummation());
+            Assert.AreEqual(140, 7.SquareSummation());
+            Assert.AreEqual(385, 10.SquareSummation());
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void DifferenceOfSummationTests()
+        {
+            var squareOfSummationOf10 = Convert.ToInt64(Math.Pow(10.Summation(), 2));
+            Assert.AreEqual(3025, squareOfSummationOf10);
+            Assert.AreEqual(2640, Convert.ToInt64(Math.Pow(10.Summation(), 2)) - 10.SquareSummation());
+            //// Assert.AreEqual(*sanitized*, *sanitized*.SquareSummation() - *sanitized*.Summation());
         }
     }
 }

@@ -34,5 +34,25 @@ namespace Daviburg.Utilities
 
             return true;
         }
+
+        /// <summary>
+        /// Calculates the summation of natural numbers up to given value.
+        /// </summary>
+        /// <param name="value">The natural number to compute summation of.</param>
+        /// <remarks>A known formula which you can find a demonstration of at <seealso href="https://trans4mind.com/personal_development/mathematics/series/sumNaturalNumbers.htm#mozTocId914933"/>.</remarks>
+        public static long Summation(this int value)
+        {
+            return (long)value * ((long)value + 1) / 2;
+        }
+
+        /// <summary>
+        /// Calculates the summation of squares of natural numbers up to given value.
+        /// </summary>
+        /// <param name="value">The natural number to compute square summation of.</param>
+        /// <remarks>See an approchable demonstration by difference at <seealso href="https://trans4mind.com/personal_development/mathematics/series/sumNaturalSquares.htm"/>.</remarks>
+        public static long SquareSummation(this int value)
+        {
+            return ((long)value * ((long)value + 1) * (2 * (long)value + 1)) / 6;
+        }
     }
 }

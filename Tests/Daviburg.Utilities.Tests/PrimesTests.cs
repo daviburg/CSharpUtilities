@@ -17,7 +17,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-
 namespace Daviburg.Utilities.Tests
 {
     using System.Diagnostics.CodeAnalysis;
