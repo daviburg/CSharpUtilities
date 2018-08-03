@@ -39,6 +39,7 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual(expected: 17, actual: Primes.Singleton[6]);
             Assert.AreEqual(expected: 19, actual: Primes.Singleton[7]);
             Assert.AreEqual(expected: 23, actual: Primes.Singleton[8]);
+            //// Assert.AreEqual(expected: *sanitized *, actual: Primes.Singleton[10000]);
         }
 
         [TestMethod]
