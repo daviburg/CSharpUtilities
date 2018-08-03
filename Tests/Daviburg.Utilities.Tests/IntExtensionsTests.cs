@@ -122,6 +122,8 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual(3025, squareOfSummationOf10);
             Assert.AreEqual(2640, Convert.ToInt64(Math.Pow(10.Summation(), 2)) - 10.SquareSummation());
             //// Assert.AreEqual(*sanitized*, *sanitized*.SquareSummation() - *sanitized*.Summation());
+            Assert.AreEqual(23, 3 * 3.Summation() + 5 * 1.Summation() - 15 * 0.Summation());
+            //// Assert.AreEqual(*sanitized *, 3 * (999 / 3).Summation() + 5 * (999 / 5).Summation() - 15 * (999 / 15).Summation());
         }
     }
 }
