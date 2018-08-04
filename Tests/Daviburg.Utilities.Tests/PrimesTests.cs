@@ -19,6 +19,8 @@
 
 namespace Daviburg.Utilities.Tests
 {
+    using System;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -44,9 +46,33 @@ namespace Daviburg.Utilities.Tests
 
         [TestMethod]
         [ExcludeFromCodeCoverage]
+        public void ParallelPrimesTests()
+        {
+            var stopwatch = new Stopwatch();
+            var iterationCount = 0;
+            do
+            {
+                iterationCount++;
+                stopwatch.Restart();
+                Primes.Singleton.ParallelRangePrimeCompute(searchSizeLimit: 8000000, chunkSizeLimit: 600000);
+                Console.WriteLine($"Round {iterationCount} in '{stopwatch.Elapsed}'. Discovered {Primes.Singleton.DiscoveredPrimesCount} primes which largest is {Primes.Singleton.LargestDiscoveredPrime}.");
+            } while (iterationCount < 26);
+
+            Assert.AreEqual(expected: 23, actual: Primes.Singleton[8]);
+            Assert.AreEqual(expected: 37, actual: Primes.Singleton[11]);
+            Assert.AreEqual(expected: 557, actual: Primes.Singleton[101]);
+            Assert.AreEqual(expected: 7933, actual: Primes.Singleton[1001]);
+            Assert.AreEqual(expected: 104759, actual: Primes.Singleton[10001]);
+            Assert.AreEqual(expected: 1299743, actual: Primes.Singleton[100001]);
+            Assert.AreEqual(expected: 15485917, actual: Primes.Singleton[1000001]);
+            Assert.AreEqual(expected: 196026521, actual: Primes.Singleton[10871296]);
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
         public void LargestPrimeFactorOfTests()
         {
-            Assert.AreEqual(expected: 29, actual: Primes.Singleton.LargestPrimeFactorOf(13195));
+            Assert.AreEqual(expected: 29, actual: Primes.Singleton.LargestPrimeFactorOf(13195)); 
 
             // Next values are sanitized to not spoil some online challenge
             //// Assert.AreEqual(expected: *sanitized*, actual: Primes.Singleton.LargestPrimeFactorOf(*sanitized*));

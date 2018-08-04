@@ -20,6 +20,8 @@
 namespace Daviburg.Utilities
 {
     using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Helper class to incrementally discover small prime numbers.
@@ -101,6 +103,57 @@ namespace Daviburg.Utilities
             }
         }
 
+        public int DiscoveredPrimesCount => this.primes.Length;
+
+        public long LargestDiscoveredPrime => this.primes[this.primes.Length - 1];
+
+        public Array CheckRangeForPrimes(long rangeStart, long rangeEnd)
+        {
+            var primesFound = new List<long>();
+            long candidate = rangeStart;
+            do
+            {
+                if (this.IsPrime(candidate))
+                {
+                    primesFound.Add(candidate);
+                }
+            } while ((candidate += 2) <= rangeEnd);
+
+            return primesFound.ToArray();
+        }
+
+        public void ParallelRangePrimeCompute(int searchSizeLimit, int chunkSizeLimit)
+        {
+            var largestFoundPrime = this.primes[this.primes.Length - 1];
+            var upperSearchBoundary = Math.Min(largestFoundPrime + searchSizeLimit, Convert.ToInt64(Math.Pow(largestFoundPrime, 2)));
+            var tasks = new Queue<Task<Array>>();
+            var lowerSearchBoundary = largestFoundPrime + 2;
+            long rangeEnd;
+
+            do
+            {
+                rangeEnd = Math.Min(lowerSearchBoundary + chunkSizeLimit, upperSearchBoundary);
+                tasks.Enqueue(
+                    Task.Factory
+                        .StartNew(
+                            (range) =>
+                            {
+                                return this.CheckRangeForPrimes(((Tuple<long, long>)range).Item1, ((Tuple<long, long>)range).Item2);
+                            },
+                            new Tuple<long, long>(lowerSearchBoundary, rangeEnd)));
+                lowerSearchBoundary = rangeEnd + 2;
+            }
+            while (rangeEnd != upperSearchBoundary);
+
+            while (tasks.Count != 0)
+            {
+                var task = tasks.Dequeue();
+                var oldMax = this.primes.Length;
+                Array.Resize(ref this.primes, this.primes.Length + task.Result.Length);
+                Array.Copy(task.Result, 0, this.primes, oldMax, task.Result.Length);
+            }
+        }
+
         public long LargestPrimeFactorOf(long value)
         {
             var ceiling = Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
@@ -116,7 +169,7 @@ namespace Daviburg.Utilities
 
                 quotient = quotient / this[primeIndex];
             }
-            while (this[primeIndex] <= ceiling && quotient >= this.primes[this.primes.Length - 1]);
+            while (this[primeIndex] <= ceiling && quotient >= this.primes[primeIndex]);
 
             return this[primeIndex];
         }
