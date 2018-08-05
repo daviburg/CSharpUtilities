@@ -109,6 +109,9 @@ namespace Daviburg.Utilities
 
         public Array CheckRangeForPrimes(long rangeStart, long rangeEnd)
         {
+            // This is a simple version which only skips even numbers and not factors of 3.
+            // Through empyrical testing, the added complexity of skipping factors of 3 does not pay off.
+            // Probably because the overhead of IsPrime method is minimal when it returns early.
             var primesFound = new List<long>();
             long candidate = rangeStart;
             do
@@ -151,6 +154,55 @@ namespace Daviburg.Utilities
                 var oldMax = this.primes.Length;
                 Array.Resize(ref this.primes, this.primes.Length + task.Result.Length);
                 Array.Copy(task.Result, 0, this.primes, oldMax, task.Result.Length);
+            }
+        }
+
+        public void SieveSearch(int searchSizeLimit)
+        {
+            // Look only at odd numbers, halving the sieve size
+            var isFactor = new bool[searchSizeLimit / 2];
+
+            // Special case 1 is not a prime number
+            isFactor[0] = true;
+
+            // Stop the sieve search once we have flagged all the factors of primes up to square root of the sieve size.
+            // This is for the same reason as the test limit for IsPrime method.
+            var maxTest = Convert.ToInt64(Math.Floor(Math.Sqrt(searchSizeLimit)));
+
+            for(var factorPrimeIndex = 1; this.primes[factorPrimeIndex] <= maxTest; factorPrimeIndex++)
+            { 
+                var prime = this.primes[factorPrimeIndex];
+
+                // For this prime, flag all the factors. These numbers aren't prime.
+                // Jump to prime ^ 2 as the first factor to flag as everything below has already gone through the sieve
+                for (var factor = prime * prime; factor <= searchSizeLimit; factor += prime * 2)
+                {
+                    // As we halved our sieve size, adjust the index
+                    isFactor[factor / 2] = true;
+                }
+
+                var completedSieveLimit = prime * prime / 2;
+                var newPrimes = new List<long>();
+
+                // All the numbers not-flagged as factors yet and lower than the power of the current prime we used as factor,
+                // these are prime numbers. Index limit is adjusted based on halving the sieve.
+                // Skip all numbers less than the power of the previous primed used as factor as we already picked new primes
+                // from that part of the array.
+                for (var index = this.primes[factorPrimeIndex - 1] / 2; index < completedSieveLimit; index++)
+                {
+                    if (!isFactor[index])
+                    {
+                        var discoveredPrime = (index * 2) + 1;
+                        if (discoveredPrime > this.LargestDiscoveredPrime)
+                        {
+                            newPrimes.Add(discoveredPrime);
+                        }
+                    }
+                }
+
+                var oldMax = this.primes.Length;
+                Array.Resize(ref this.primes, this.primes.Length + newPrimes.Count);
+                Array.Copy(newPrimes.ToArray(), 0, this.primes, oldMax, newPrimes.Count);
             }
         }
 

@@ -70,6 +70,42 @@ namespace Daviburg.Utilities.Tests
 
         [TestMethod]
         [ExcludeFromCodeCoverage]
+        public void SievePrimesTests()
+        {
+            Primes.Singleton.SieveSearch(searchSizeLimit: 20000000);
+            Assert.IsTrue(Primes.Singleton.DiscoveredPrimesCount > 1000000);
+           
+
+            Assert.AreEqual(expected: 23, actual: Primes.Singleton[8]);
+            Assert.AreEqual(expected: 37, actual: Primes.Singleton[11]);
+            Assert.AreEqual(expected: 557, actual: Primes.Singleton[101]);
+            Assert.AreEqual(expected: 7933, actual: Primes.Singleton[1001]);
+            Assert.AreEqual(expected: 104759, actual: Primes.Singleton[10001]);
+            Assert.AreEqual(expected: 1299743, actual: Primes.Singleton[100001]);
+            Assert.AreEqual(expected: 15485917, actual: Primes.Singleton[1000001]);
+            ////Assert.AreEqual(expected: 196026521, actual: Primes.Singleton[10871296]);
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PrimeSummationTests()
+        {
+            while (Primes.Singleton.LargestDiscoveredPrime < 2000000)
+            {
+                Primes.Singleton.ParallelRangePrimeCompute(searchSizeLimit: 2000100 - (int)Primes.Singleton.LargestDiscoveredPrime, chunkSizeLimit: 600000);
+            }
+
+            long sumOfPrimes = 0;
+            for (int index = 0; Primes.Singleton[index] < 2000000; index++)
+            {
+                sumOfPrimes += Primes.Singleton[index];
+            }
+
+            Console.WriteLine($"{sumOfPrimes}");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
         public void LargestPrimeFactorOfTests()
         {
             Assert.AreEqual(expected: 29, actual: Primes.Singleton.LargestPrimeFactorOf(13195)); 
