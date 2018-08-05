@@ -85,6 +85,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InlineTests.cs" />
     <Compile Include="ConcurrentLockDictionaryTests.cs" />
     <Compile Include="FibonacciTests.cs" />
     <Compile Include="IntExtensionsTests.cs" />
