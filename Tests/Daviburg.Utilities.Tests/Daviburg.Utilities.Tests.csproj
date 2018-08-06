@@ -85,12 +85,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoPrimeTests.cs" />
     <Compile Include="InlineTests.cs" />
     <Compile Include="ConcurrentLockDictionaryTests.cs" />
     <Compile Include="FibonacciTests.cs" />
     <Compile Include="IntExtensionsTests.cs" />
     <Compile Include="PrimesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PythagoreanTripleTests.cs" />
     <Compile Include="TestEventListener.cs" />
     <Compile Include="EventRecordingForUtilities.cs" />
   </ItemGroup>

@@ -56,7 +56,7 @@ namespace Daviburg.Utilities.Tests
                 stopwatch.Restart();
                 Primes.Singleton.ParallelRangePrimeCompute(searchSizeLimit: 8000000, chunkSizeLimit: 600000);
                 Console.WriteLine($"Round {iterationCount} in '{stopwatch.Elapsed}'. Discovered {Primes.Singleton.DiscoveredPrimesCount} primes which largest is {Primes.Singleton.LargestDiscoveredPrime}.");
-            } while (iterationCount < 26);
+            } while (iterationCount < 10);
 
             Assert.AreEqual(expected: 23, actual: Primes.Singleton[8]);
             Assert.AreEqual(expected: 37, actual: Primes.Singleton[11]);
@@ -64,8 +64,10 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual(expected: 7933, actual: Primes.Singleton[1001]);
             Assert.AreEqual(expected: 104759, actual: Primes.Singleton[10001]);
             Assert.AreEqual(expected: 1299743, actual: Primes.Singleton[100001]);
-            Assert.AreEqual(expected: 15485917, actual: Primes.Singleton[1000001]);
-            Assert.AreEqual(expected: 196026521, actual: Primes.Singleton[10871296]);
+
+            // Raise iteration count to 26 for these. Execution time around 50 seconds on 12 core machine.
+            ////Assert.AreEqual(expected: 15485917, actual: Primes.Singleton[1000001]);
+            ////Assert.AreEqual(expected: 196026521, actual: Primes.Singleton[10871296]);
         }
 
         [TestMethod]
