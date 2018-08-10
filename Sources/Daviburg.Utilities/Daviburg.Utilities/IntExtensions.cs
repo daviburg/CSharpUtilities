@@ -19,6 +19,8 @@
 
 namespace Daviburg.Utilities
 {
+    using System.Collections.Generic;
+
     public static class IntExtensions
     {
         public static bool IsPalindrome(this int value)
@@ -53,6 +55,11 @@ namespace Daviburg.Utilities
         public static long SquareSummation(this int value)
         {
             return ((long)value * ((long)value + 1) * (2 * (long)value + 1)) / 6;
+        }
+
+        public static List<PrimeFactor> PrimeFactorization(this int value)
+        {
+            return ((long)value).PrimeFactorization();
         }
     }
 }

@@ -125,5 +125,19 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual(23, 3 * 3.Summation() + 5 * 1.Summation() - 15 * 0.Summation());
             //// Assert.AreEqual(*sanitized *, 3 * (999 / 3).Summation() + 5 * (999 / 5).Summation() - 15 * (999 / 15).Summation());
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PrimeFactorizationTests()
+        {
+            CollectionAssert.AreEqual(expected: new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 1) }, actual: 2.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 2, exponent: 1) }, 3.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 2) }, 4.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 3, exponent: 1) }, 5.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 1), new PrimeFactor(2, 1) }, 6.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 2), new PrimeFactor(2, 1) }, 12.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 5), new PrimeFactor(2, 3) }, 864.PrimeFactorization());
+            CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 2), new PrimeFactor(2, 2), new PrimeFactor(3, 2) }, 900.PrimeFactorization());
+        }
     }
 }
