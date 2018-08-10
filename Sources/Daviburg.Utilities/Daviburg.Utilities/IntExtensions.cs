@@ -19,6 +19,7 @@
 
 namespace Daviburg.Utilities
 {
+    using System;
     using System.Collections.Generic;
 
     public static class IntExtensions
@@ -57,9 +58,13 @@ namespace Daviburg.Utilities
             return ((long)value * ((long)value + 1) * (2 * (long)value + 1)) / 6;
         }
 
-        public static List<PrimeFactor> PrimeFactorization(this int value)
-        {
-            return ((long)value).PrimeFactorization();
-        }
+        public static List<PrimeFactor> PrimeFactorization(this int value) =>  ((long)value).PrimeFactorization();
+
+        /// <summary>
+        /// Gets the integral part of the squared root of a given number.
+        /// </summary>
+        /// <param name="value">The number.</param>
+        /// <remarks>This formula is frequently used as upper search limit for primes and divisors.</remarks>
+        public static int IntegralPartOfSquareRoot(this int value) => Convert.ToInt32(Math.Floor(Math.Sqrt(value)));
     }
 }

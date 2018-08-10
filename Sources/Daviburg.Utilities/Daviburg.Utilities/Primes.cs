@@ -49,7 +49,7 @@ namespace Daviburg.Utilities
         private bool IsPrime(long value)
         {
             // If we haven't found a prime factor lower or equal to the square root, then there won't be a higher prime factor as this factor would need another lower factor to be multiplied by to result in our candidate.
-            var maxTest = Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
+            var maxTest = value.IntegralPartOfSquareRoot();
 
             // Although our array of prime numbers is zero-based, because we only evaluate odd numbers they will never have the first primer number two as prime factor.
             int existingPrimeIndex = 1;
@@ -167,7 +167,7 @@ namespace Daviburg.Utilities
 
             // Stop the sieve search once we have flagged all the factors of primes up to square root of the sieve size.
             // This is for the same reason as the test limit for IsPrime method.
-            var maxTest = Convert.ToInt64(Math.Floor(Math.Sqrt(searchSizeLimit)));
+            var maxTest = searchSizeLimit.IntegralPartOfSquareRoot();
 
             for(var factorPrimeIndex = 1; this.primes[factorPrimeIndex] <= maxTest; factorPrimeIndex++)
             { 
@@ -208,7 +208,7 @@ namespace Daviburg.Utilities
 
         public long LargestPrimeFactorOf(long value)
         {
-            var ceiling = Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
+            var ceiling = value.IntegralPartOfSquareRoot();
             var primeIndex = 0;
             var quotient = value;
 
@@ -235,7 +235,7 @@ namespace Daviburg.Utilities
             // All the prime numbers that are less than the square root of our upper limit value may result in non prime quotients if dividing our result
             // so that all the numbers are quotients of the result. Greater prime numbers are never needed to match non prime quotients,
             // so we will only need them at 'power 1'.
-            var ceiling = Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
+            var ceiling = value.IntegralPartOfSquareRoot();
             var multiple = (long)1;
 
             // All the prime numbers that are less or equal to our upper limit value must be quotients of our result,

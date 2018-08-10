@@ -25,6 +25,13 @@ namespace Daviburg.Utilities
     public static class LongExtensions
     {
         /// <summary>
+        /// Gets the integral part of the squared root of a given number.
+        /// </summary>
+        /// <param name="value">The number.</param>
+        /// <remarks>This formula is frequently used as upper search limit for primes and divisors.</remarks>
+        public static long IntegralPartOfSquareRoot(this long value) => Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
+
+        /// <summary>
         /// Prime factorization of a given natural number.
         /// </summary>
         /// <param name="value">The natural number.</param>
@@ -52,6 +59,15 @@ namespace Daviburg.Utilities
                 if (exponent != 0)
                 {
                     primeFactors.Add(new PrimeFactor(order: primeOrder, exponent: exponent));
+                }
+                else
+                {
+                    // Short-cut the search once we pass the square root limit, as the remaining value is prime
+                    if (Primes.Singleton[primeOrder - 1] > value.IntegralPartOfSquareRoot())
+                    {
+                        primeFactors.Add(new PrimeFactor(baseNumber: value, exponent: 1));
+                        break;
+                    }
                 }
             }
 
