@@ -39,6 +39,56 @@ namespace Daviburg.Utilities
         }
 
         /// <summary>
+        /// Modulo of a power, made to fit in available type by aggressively applying the modulo
+        /// </summary>
+        /// <param name="_base">The base number for the power operation.</param>
+        /// <param name="exponent">The exponent for the power operation.</param>
+        /// <param name="modulus">The modulos for the modulo operation.</param>
+        /// <remarks>
+        /// Power modulo is a special case of modular arithmetic multiplicative property
+        /// (A * B) % C == ((A % C) * (B % C)) % C
+        /// Hence (Base ^ Exponent) % C == ((Base % C) ^ Exponent) % C
+        /// and furthermore (Base ^ Exponent) % C == ((Base % C) * ((Base % C) ^ (Exponent - 1))) % C
+        /// </remarks>
+        public static long PowerModulo(long _base, long exponent, long modulus)
+        {
+            if (exponent == 0)
+            {
+                return 1;
+            }
+
+            // (_base ^ exponent) % modulo = (((_base ^ (exponent - 2  ^ n)) % modulo) * (_base ^ (2 ^ n)) ) % modulo
+            // Decompose exponent in powers of 2, which happen to be all the bits equal to 1.
+            // Start with (_base ^ (2 ^ 0) % modulo) where 2 ^ 0 is 1 hence it's just _base % modulo
+            // The result will be multipled by this only if the exponent bit at offset 0 is equal to 1.
+            // Then it will be used to calculate the next power modulo.
+            var intermediaryPowerModulo = _base % modulus;
+            long result = 1;
+
+            do
+            {
+                if ((exponent & 1) == 1)
+                {
+                    result = (result * intermediaryPowerModulo) % modulus;
+
+                    // Once the exponent has been shifted sufficiently to the right to be just 1, we've applied the last multiplication needed.
+                    if (exponent == 1)
+                    {
+                        break;
+                    }
+                }
+
+                // We haven't exhausted the 1 bits in the exponent yet, shifting right further.
+                exponent >>= 1;
+
+                // Each power of 2 in the exponent doubles the number of base multiplications needed.
+                intermediaryPowerModulo = (intermediaryPowerModulo * intermediaryPowerModulo) % modulus;
+            } while (true);
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the greatest common divisor using the binary algorithm.
         /// </summary>
         public static long GreatestCommonDivisor(long leftValue, long rightValue)

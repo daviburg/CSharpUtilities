@@ -45,5 +45,15 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual(151, MathAlgorithms.GreatestCommonDivisor(163231, 152057));
             Assert.AreEqual(151, MathAlgorithms.GreatestCommonDivisor(163231, 135749));
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PowerModuloTests()
+        {
+            Assert.AreEqual(1, MathAlgorithms.PowerModulo(100, 0, 10));
+            Assert.AreEqual(0, MathAlgorithms.PowerModulo(4, 6, 4));
+            Assert.AreEqual(4, MathAlgorithms.PowerModulo(4, 6, 6));
+            Assert.AreEqual(8, MathAlgorithms.PowerModulo(5, 7, 13));
+        }
     }
 }
