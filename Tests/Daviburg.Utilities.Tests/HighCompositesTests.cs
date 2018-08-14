@@ -54,10 +54,13 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual((long)293318625600, HighComposites.Singleton[90].Value);
             Assert.AreEqual((long)4497552259200, HighComposites.Singleton[102].Value);
             Assert.AreEqual((long)6746328388800, HighComposites.Singleton[103].Value);
-            for (var index = 0; index < 105; index++)
+            for (var index = 0; index < 164; index++)
             {
-                Console.WriteLine($"Order {index:D3} has {HighComposites.Singleton[index].CountOfDivisors:D5} divisors for value {HighComposites.Singleton[index].Value}.");
+                Console.WriteLine($"Order {index + 1:D3} has {HighComposites.Singleton[index].CountOfDivisors:D5} divisors for value {HighComposites.Singleton[index].Value}.");
             }
+
+            Assert.AreEqual((long)4488062423933088000, HighComposites.Singleton[163].Value);
+            Assert.AreEqual(138240, HighComposites.Singleton[163].CountOfDivisors);
         }
     }
 }

@@ -104,6 +104,11 @@ namespace Daviburg.Utilities
                         })
                     .ToList();
 
+                if (leafNodeCandidates.Count == 0)
+                {
+                    throw new OverflowException("Cannot find further highly composable number - reached the limits of C#'s 64-bit long.");
+                }
+
                 stagedCandidates.AddRange(leafNodeCandidates);
 
                 // 1. Of the new leaves, order them by smallest to largest value
