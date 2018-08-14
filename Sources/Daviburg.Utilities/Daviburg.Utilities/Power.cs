@@ -24,7 +24,7 @@ namespace Daviburg.Utilities
     /// <summary>
     /// A base number raised by an exponent with JIT value computation, and custom comparison.
     /// </summary>
-    public class Power
+    public class Power : IEquatable<Power>
     {
         private double? value;
 
@@ -49,6 +49,11 @@ namespace Daviburg.Utilities
         public override bool Equals(Object otherObject)
         {
             return otherObject is Power && this == (Power)otherObject;
+        }
+
+        public bool Equals(Power other)
+        {
+            return this == other;
         }
 
         public override int GetHashCode()

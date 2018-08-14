@@ -31,6 +31,8 @@ namespace Daviburg.Utilities
         /// <remarks>This formula is frequently used as upper search limit for primes and divisors.</remarks>
         public static long IntegralPartOfSquareRoot(this long value) => Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
 
+        public static long Power(this long value, long exponent) => Convert.ToInt64(Math.Pow(value, exponent));
+
         /// <summary>
         /// Prime factorization of a given natural number.
         /// </summary>

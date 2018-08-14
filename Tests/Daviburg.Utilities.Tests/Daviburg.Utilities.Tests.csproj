@@ -88,6 +88,7 @@
     <Compile Include="CoPrimeTests.cs" />
     <Compile Include="ConcurrentLockDictionaryTests.cs" />
     <Compile Include="FibonacciTests.cs" />
+    <Compile Include="HighCompositesTests.cs" />
     <Compile Include="IntExtensionsTests.cs" />
     <Compile Include="LongExtensionsTests.cs" />
     <Compile Include="MathAlgorithmsTests.cs" />
