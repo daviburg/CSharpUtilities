@@ -34,7 +34,7 @@ namespace Daviburg.Utilities
             private int? countofDivisors;
             private long? value;
 
-            internal HighComposite(List<int> exponents) => this.Exponents = exponents;
+            internal HighComposite(IReadOnlyList<int> exponents) => this.Exponents = exponents;
 
             public readonly IReadOnlyList<int> Exponents;
 

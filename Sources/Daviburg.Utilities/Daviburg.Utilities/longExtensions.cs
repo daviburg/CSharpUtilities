@@ -34,6 +34,26 @@ namespace Daviburg.Utilities
         public static long Power(this long value, long exponent) => Convert.ToInt64(Math.Pow(value, exponent));
 
         /// <summary>
+        /// Calculates the summation of natural numbers up to given value.
+        /// </summary>
+        /// <param name="value">The natural number to compute summation of.</param>
+        /// <remarks>See also <see cref="IntExtensions.Summation(int)"/>.</remarks>
+        public static long Summation(this long value)
+        {
+            return value * (value + 1) / 2;
+        }
+
+        /// <summary>
+        /// Calculates the natural number which summation of is closest to the given value.
+        /// </summary>
+        /// <param name="sum">The summation to infer a natural number from.</param>
+        /// <remarks>This works because square root of n*n + n is closest to n.</remarks>
+        public static long AntiSummation(this long sum)
+        {
+            return Convert.ToInt64(Math.Floor(Math.Sqrt(sum * 2)));
+        }
+
+        /// <summary>
         /// Prime factorization of a given natural number.
         /// </summary>
         /// <param name="value">The natural number.</param>
@@ -311,6 +331,11 @@ namespace Daviburg.Utilities
             while (factor == 1);
 
             return !(factor == value);
+        }
+
+        public static int CountOfDivisors(this long value)
+        {
+            return new Composite(value.BlendPrimeFactorization()).CountOfDivisors;
         }
     }
 }

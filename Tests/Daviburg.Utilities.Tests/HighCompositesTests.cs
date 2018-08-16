@@ -62,5 +62,31 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual((long)4488062423933088000, HighComposites.Singleton[163].Value);
             Assert.AreEqual(138240, HighComposites.Singleton[163].CountOfDivisors);
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void TriangularCompositeTest()
+        {
+            // First search for the lowest HCN that has more than 500 divisors.
+            // Any number less that than, triangular or not, will have no more than 500 divisors, by definition of HCN.
+            var index = 0;
+            while (HighComposites.Singleton[index].CountOfDivisors <= 500)
+            {
+                index++;
+            }
+
+            Console.WriteLine($"First HCN with over 500 divisors is {HighComposites.Singleton[index].Value} with {HighComposites.Singleton[index].CountOfDivisors} divisors.");
+
+            var triangular = Triangular.ClosestTriangularNumber(HighComposites.Singleton[index].Value);
+
+            Console.WriteLine($"Jump-starting the search at triangular number of order {triangular.Order} and value {triangular.Value}.");
+
+            while (triangular.Value.CountOfDivisors() < 500)
+            {
+                triangular = triangular.NextTriangularNumber();
+            }
+
+            Console.WriteLine($"The secret number is the triangular number of order {triangular.Order} and value {triangular.Value}.");
+        }
     }
 }
