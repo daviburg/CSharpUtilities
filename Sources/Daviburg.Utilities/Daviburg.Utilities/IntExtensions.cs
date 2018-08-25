@@ -27,7 +27,7 @@ namespace Daviburg.Utilities
         public static bool IsPalindrome(this int value)
         {
             var asString = value.ToString();
-            for (int index = 0; index < asString.Length / 2; index++)
+            for (int index = 0; index < asString.Length >> 1; index++)
             {
                 if (asString[index] != asString[asString.Length - (index + 1)])
                 {
@@ -45,7 +45,7 @@ namespace Daviburg.Utilities
         /// <remarks>A known formula which you can find a demonstration of at <seealso href="https://trans4mind.com/personal_development/mathematics/series/sumNaturalNumbers.htm#mozTocId914933"/>.</remarks>
         public static long Summation(this int value)
         {
-            return (long)value * ((long)value + 1) / 2;
+            return (long)value * ((long)value + 1) >> 1;
         }
 
         /// <summary>
@@ -66,5 +66,12 @@ namespace Daviburg.Utilities
         /// <param name="value">The number.</param>
         /// <remarks>This formula is frequently used as upper search limit for primes and divisors.</remarks>
         public static int IntegralPartOfSquareRoot(this int value) => Convert.ToInt32(Math.Floor(Math.Sqrt(value)));
+
+        /// <summary>
+        /// Gets the next value in the Collatz sequence.
+        /// </summary>
+        /// <param name="value">The current value (should be a natural number).</param>
+        /// <returns>The next value in the Collatz sequence if the input is a natural number. Otherwise the return value is undefined.</returns>
+        public static int CollatzSequenceNext(this int value) => (value & 1) == 0 ? value >> 1 : checked(checked(value * 3) + 1);
     }
 }

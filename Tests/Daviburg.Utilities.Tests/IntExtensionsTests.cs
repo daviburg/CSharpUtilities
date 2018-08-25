@@ -139,5 +139,21 @@ namespace Daviburg.Utilities.Tests
             CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 5), new PrimeFactor(2, 3) }, 864.PrimeFactorization());
             CollectionAssert.AreEqual(new List<PrimeFactor> { new PrimeFactor(order: 1, exponent: 2), new PrimeFactor(2, 2), new PrimeFactor(3, 2) }, 900.PrimeFactorization());
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void CollatzSimpleTests()
+        {
+            Assert.AreEqual(4, 1.CollatzSequenceNext());
+            Assert.AreEqual(1, 2.CollatzSequenceNext());
+            Assert.AreEqual(10, 3.CollatzSequenceNext());
+            Assert.AreEqual(2, 4.CollatzSequenceNext());
+            Assert.AreEqual(16, 5.CollatzSequenceNext());
+            Assert.AreEqual(3, 6.CollatzSequenceNext());
+            Assert.AreEqual(22, 7.CollatzSequenceNext());
+            Assert.AreEqual(4, 8.CollatzSequenceNext());
+            Assert.AreEqual(28, 9.CollatzSequenceNext());
+            Assert.AreEqual(5, 10.CollatzSequenceNext());
+        }
     }
 }

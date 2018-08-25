@@ -178,17 +178,17 @@ namespace Daviburg.Utilities
                 for (var factor = prime * prime; factor <= searchSizeLimit; factor += prime * 2)
                 {
                     // As we halved our sieve size, adjust the index
-                    isFactor[factor / 2] = true;
+                    isFactor[factor >> 1] = true;
                 }
 
-                var completedSieveLimit = prime * prime / 2;
+                var completedSieveLimit = prime * prime >> 1;
                 var newPrimes = new List<long>();
 
                 // All the numbers not-flagged as factors yet and lower than the power of the current prime we used as factor,
                 // these are prime numbers. Index limit is adjusted based on halving the sieve.
                 // Skip all numbers less than the power of the previous primed used as factor as we already picked new primes
                 // from that part of the array.
-                for (var index = this.primes[factorPrimeIndex - 1] / 2; index < completedSieveLimit; index++)
+                for (var index = this.primes[factorPrimeIndex - 1] >> 1; index < completedSieveLimit; index++)
                 {
                     if (!isFactor[index])
                     {

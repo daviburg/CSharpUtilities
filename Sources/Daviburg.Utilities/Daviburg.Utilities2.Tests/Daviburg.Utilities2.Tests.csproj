@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MathAlgorithms2Tests.cs" />
     <Compile Include="SmallIntSeriesTests.cs" />
     <Compile Include="XmlSchemaExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

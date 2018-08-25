@@ -40,7 +40,7 @@ namespace Daviburg.Utilities
         /// <remarks>See also <see cref="IntExtensions.Summation(int)"/>.</remarks>
         public static long Summation(this long value)
         {
-            return value * (value + 1) / 2;
+            return value * (value + 1) >> 1;
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Daviburg.Utilities
         public static bool IsPrime(this long value)
         {
             // Eliminate obvious non-prime values below 2 or even. Special case 2 is prime.
-            if (value <= 2 || value % 2 == 0)
+            if (value <= 2 || (value & 1) == 0)
             {
                 return (value == 2);
             }
@@ -337,5 +337,17 @@ namespace Daviburg.Utilities
         {
             return new Composite(value.BlendPrimeFactorization()).CountOfDivisors;
         }
+
+        /// <summary>
+        /// Gets the next value in the Collatz sequence.
+        /// </summary>
+        /// <param name="value">The current value (should be a natural number).</param>
+        /// <returns>The next value in the Collatz sequence if the input is a natural number. Otherwise the return value is undefined.</returns>
+        /// <remarks>
+        /// Modulo is a slow operator compared to bit masking, hence gained performance with & 1 operator over % 2.
+        /// Bit shifting is documented as faster than division, although it is unclear if the JIT compiler knowns to optimize this regardless.
+        /// <seealso href="https://msdn.microsoft.com/en-us/library/ms973852.aspx"/>
+        /// </remarks>
+        public static long CollatzSequenceNext(this long value) => (value & 1) == 0 ? value >> 1 : (value * 3) + 1;
     }
 }
