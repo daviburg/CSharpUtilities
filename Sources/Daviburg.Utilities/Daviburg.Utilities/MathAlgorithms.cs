@@ -195,13 +195,13 @@ namespace Daviburg.Utilities
             var greaterDividingFactor = itemsTaken > differenceSizeToTaken ? itemsTaken : differenceSizeToTaken;
 
             long coefficient = 1;
-            for (var index = 0; index < greaterDividingFactor; index++)
+            for (var index = 1; index <= greaterDividingFactor; index++)
             {
-                coefficient *= collectionSize - index;
+                coefficient *= collectionSize--;
 
-                // This division always results in a natural integer because we have multiplied by (index + 1) consecutive multiplicants
-                // hence always one factor of (index + 1).
-                coefficient /= index + 1;
+                // This division always results in a natural integer because we have multiplied by index consecutive multiplicants
+                // hence always one factor of index.
+                coefficient /= index;
             }
 
             return coefficient;
