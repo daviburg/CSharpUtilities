@@ -171,5 +171,24 @@ namespace Daviburg.Utilities.Tests
 
             Console.WriteLine($"The secret value is simply {bigInteger}");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void BinomialCoefficientTests()
+        {
+            // At collection size 30 the partial facorial results in an overflow in the combinations method.
+            for (var collectionSize = 1; collectionSize < 30; collectionSize++)
+            {
+                for (var itemsTaken = 1; itemsTaken <= collectionSize; itemsTaken++)
+                {
+                    Assert.AreEqual(
+                        MathAlgorithms.Combinations(collectionSize, itemsTaken),
+                        MathAlgorithms.BinomialCoefficient(collectionSize, itemsTaken),
+                        $"Combinations output {MathAlgorithms.Combinations(collectionSize, itemsTaken)} differs from BinomialCoefficient output {MathAlgorithms.BinomialCoefficient(collectionSize, itemsTaken)} for collectionSize {collectionSize} and itemsTaken {itemsTaken}.");
+                }
+            }
+            
+            Console.WriteLine($"The number of unique North-East paths in a 20x20 lattice is {MathAlgorithms.BinomialCoefficient(40, 20)}.");
+        }
     }
 }

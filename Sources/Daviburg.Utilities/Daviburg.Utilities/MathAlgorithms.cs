@@ -161,5 +161,50 @@ namespace Daviburg.Utilities
             // Re-apply the common factors of 2.
             return leftValue << shiftCount;
         }
+
+        /// <summary>
+        /// Calculates the number of possible combinations taking k items out of a collection of size n.
+        /// </summary>
+        /// <param name="collectionSize">The collection size.</param>
+        /// <param name="itemsTaken">The numbers of items to take in each combination.</param>
+        /// <returns>Count of possible unique combinations.</returns>
+        /// <remarks>
+        /// The calculation is based on the formula (n, k) = n!/(k! * (n - k)!) with simplification of overlapping multipliers with divisors.
+        /// This is the same as the <see cref="MathAlgorithms.BinomialCoefficient"/>, faster for small inputs, although this approach overflows sooner
+        /// as the intermediary values are much larger.
+        /// </remarks>
+        public static long Combinations(int collectionSize, int itemsTaken)
+        {
+            var differenceSizeToTaken = collectionSize - itemsTaken;
+            var greaterDividingFactor = itemsTaken > differenceSizeToTaken ? itemsTaken : differenceSizeToTaken;
+            var smallerDividingFactor = itemsTaken > differenceSizeToTaken ? differenceSizeToTaken : itemsTaken;
+
+            return collectionSize.PartialFactorial(greaterDividingFactor) / smallerDividingFactor.Factorial();
+        }
+
+        /// <summary>
+        /// Calculates the binomial coefficient, i.e. the number of possible combinations taking k items out of a collection of size n.
+        /// </summary>
+        /// <param name="collectionSize">The collection size.</param>
+        /// <param name="itemsTaken">The numbers of items to take in each combination.</param>
+        /// <returns>The binomial coefficient.</returns>
+        /// <seealso cref="MathAlgorithms.Combinations"/>
+        public static long BinomialCoefficient(int collectionSize, int itemsTaken)
+        {
+            var differenceSizeToTaken = collectionSize - itemsTaken;
+            var greaterDividingFactor = itemsTaken > differenceSizeToTaken ? itemsTaken : differenceSizeToTaken;
+
+            long coefficient = 1;
+            for (var index = 0; index < greaterDividingFactor; index++)
+            {
+                coefficient *= collectionSize - index;
+
+                // This division always results in a natural integer because we have multiplied by (index + 1) consecutive multiplicants
+                // hence always one factor of (index + 1).
+                coefficient /= index + 1;
+            }
+
+            return coefficient;
+        }
     }
 }

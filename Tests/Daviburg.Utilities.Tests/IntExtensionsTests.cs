@@ -155,5 +155,16 @@ namespace Daviburg.Utilities.Tests
             Assert.AreEqual(28, 9.CollatzSequenceNext());
             Assert.AreEqual(5, 10.CollatzSequenceNext());
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void FactorialTests()
+        {
+            // Checked factorial computation versus cached table.
+            for (var value = 0; value <= 20; value++)
+            {
+                Assert.AreEqual(Factorials.Singleton[value], value.Factorial(), $"Factorial of {value} differs between cached table {Factorials.Singleton[value]} and computed value {value.Factorial()}.");
+            }
+        }
     }
 }
