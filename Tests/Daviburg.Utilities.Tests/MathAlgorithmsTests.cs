@@ -190,5 +190,12 @@ namespace Daviburg.Utilities.Tests
             
             Console.WriteLine($"The number of unique North-East paths in a 20x20 lattice is {MathAlgorithms.BinomialCoefficient(40, 20)}.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PowerOfTwoDigitsSummationTests()
+        {
+            Console.WriteLine($"The sum of digits of the number 2 power 1000 is {(new BigInteger(1) << 1000).ToString().Aggregate(seed: 0, func: (partialSummation, digit) => partialSummation + digit.ToInt32())}.");
+        }
     }
 }
