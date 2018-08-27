@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryDirectedAcyclicGraphTests.cs" />
     <Compile Include="IntExtensions2Tests.cs" />
     <Compile Include="MathAlgorithms2Tests.cs" />
     <Compile Include="SmallIntSeriesTests.cs" />
@@ -63,6 +64,18 @@
       <Project>{c3a11c8c-42a8-47c9-a2b1-70e51e937168}</Project>
       <Name>Daviburg.Utilities2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Daviburg.Utilities\Daviburg.Utilities.csproj">
+      <Project>{6F57FC32-46D2-4EA7-8CD7-B31078D74923}</Project>
+      <Name>Daviburg.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData\p018_triangle.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\p067_triangle.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
