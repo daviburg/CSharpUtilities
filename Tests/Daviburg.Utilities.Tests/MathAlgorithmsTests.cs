@@ -20,6 +20,7 @@
 namespace Daviburg.Utilities.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Numerics;
@@ -196,6 +197,34 @@ namespace Daviburg.Utilities.Tests
         public void PowerOfTwoDigitsSummationTests()
         {
             Console.WriteLine($"The sum of digits of the number 2 power 1000 is {(new BigInteger(1) << 1000).ToString().Aggregate(seed: 0, func: (partialSummation, digit) => partialSummation + digit.ToInt32())}.");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void IntegerQuotientOfPowerOfTwoDigitsSummationTests()
+        {
+            var sequence = new List<int>();
+            for (var integer = 0; integer <= 1000; integer++)
+            {
+                sequence.Add((new BigInteger(1) << integer).ToString().Aggregate(seed: 0, func: (partialSummation, digit) => partialSummation + digit.ToInt32()) / 9);
+            }
+
+            Console.WriteLine($"The terms of the sequence of integer quotient of sum of digits of 2^n are {string.Join(", ", sequence)}.");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SundayTests()
+        {
+            // Yes, you could do the math and yes it *may* run faster... At 20ms in chk build, that is a waste of coding time.
+            Console.WriteLine($"There were {Enumerable.Range(start: 1901, count: 100).SelectMany(year => Enumerable.Range(start: 1, count: 12).Where(month => new DateTime(year: year, month: month, day: 1).DayOfWeek == DayOfWeek.Sunday)).Count()} Sundays on the first of the month in the twentieth century.");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void LargeFactorialSummationTests()
+        {
+            Console.WriteLine($"The sum of digits of the number factorial 100 is {Enumerable.Range(start: 3, count: 97).Aggregate(seed: new BigInteger(2), func: (current, multiplicator) => current * multiplicator).ToString().Aggregate(seed: 0, func: (partialSummation, digit) => partialSummation + digit.ToInt32())}.");
         }
     }
 }
