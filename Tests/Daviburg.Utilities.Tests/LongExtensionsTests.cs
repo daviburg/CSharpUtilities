@@ -19,8 +19,10 @@
 
 namespace Daviburg.Utilities.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -167,6 +169,85 @@ namespace Daviburg.Utilities.Tests
                     new PrimeFactor(baseNumber: 1524119, exponent: 1)
                 },
                 ((long)2147483671).BlendPrimeFactorization());
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void ProperDivisorsTests()
+        {
+            var properDivisorsList = new List<List<long>>
+            {
+                new List<long> { 1 },
+                new List<long> { 1 },
+                new List<long> { 1, 2 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 3 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 4 },
+                new List<long> { 1, 3 },
+                new List<long> { 1, 2, 5 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 3, 4, 6 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 7 },
+                new List<long> { 1, 3, 5 },
+                new List<long> { 1, 2, 4, 8 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 3, 6, 9 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 4, 5, 10 },
+                new List<long> { 1, 3, 7 },
+                new List<long> { 1, 2, 11 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 3, 4, 6, 8, 12 },
+                new List<long> { 1, 5 },
+                new List<long> { 1, 2, 13 },
+                new List<long> { 1, 3, 9 },
+                new List<long> { 1, 2, 4, 7, 14 },
+                new List<long> { 1 },
+                new List<long> { 1, 2, 3, 5, 6, 10, 15 },
+            };
+
+            for (var index = 0; index < properDivisorsList.Count; index++)
+            {
+                CollectionAssert.AreEquivalent(expected: properDivisorsList[index], actual: ((long)index + 2).ProperDivisors().ToList());
+            }
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SumOfProperDivisorsTests()
+        {
+            var sumOfproperDivisorsList = new List<long>
+            {
+                1, 1, 3, 1, 6, 1, 7, 4, 8, 1, 16, 1, 10, 9, 15, 1, 21, 1, 22, 11, 14, 1, 36, 6, 16, 13, 28, 1, 42, 1, 31, 15, 20, 13, 55, 1, 22, 17, 50, 1, 54, 1, 40
+            };
+
+            for (var index = 0; index < sumOfproperDivisorsList.Count; index++)
+            {
+                Assert.AreEqual(expected: sumOfproperDivisorsList[index], actual: ((long)index + 2).SumOfProperDivisors());
+            }
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void AmicableTests()
+        {
+            var arrayKnownSumOfDivisors = new long[10001];
+            var amicableList = new List<int>();
+            for (var index = 10000; index > 2; index-=2)
+            {
+                arrayKnownSumOfDivisors[index] = ((long)index).SumOfProperDivisors();
+                if (arrayKnownSumOfDivisors[index] > index && arrayKnownSumOfDivisors[index] < 10000)
+                {
+                    if (arrayKnownSumOfDivisors[(int)arrayKnownSumOfDivisors[index]] == index)
+                    {
+                        amicableList.AddRange(new[] { index, (int)arrayKnownSumOfDivisors[index] });
+                    }
+                }
+            }
+
+            Console.WriteLine($"The sum of all the amicable numbers under 10000 is {amicableList.Aggregate((sumSoFar, amicableNumber) => sumSoFar + amicableNumber)}.");
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Daviburg.Utilities
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class LongExtensions
     {
@@ -31,7 +32,45 @@ namespace Daviburg.Utilities
         /// <remarks>This formula is frequently used as upper search limit for primes and divisors.</remarks>
         public static long IntegralPartOfSquareRoot(this long value) => Convert.ToInt64(Math.Floor(Math.Sqrt(value)));
 
-        public static long Power(this long value, long exponent) => Convert.ToInt64(Math.Pow(value, exponent));
+        /// <summary>
+        /// Exponentiation by squaring for higher performance with integers
+        /// </summary>
+        /// <param name="value">The base value.</param>
+        /// <param name="exponent">The exponent.</param>
+        /// <returns>The base powers to the exponent.</returns>
+        /// <remarks>Compare results with <see cref="Convert.ToInt64(Math.Pow(value, exponent))"/>.</remarks>
+        public static long Power(this long value, long exponent)
+        {
+            long product = 1;
+
+            // Given flooring of division in the integer space, all negative exponent result in values 0 <= n < 1 hence 0.
+            // If we change the return type to be some kind of float, then use ((double)1) / value.Power(exp * -1)
+            if (exponent < 0)
+            {
+                return 0;
+            }
+
+            if (exponent == 0)
+            {
+                return product;
+            }
+
+            // Test vs 1 rather than zero to avoid one too many value multiplication compared to a loop testing for zero
+            while (exponent != 1)
+            {
+                // Use bit-mask operator over modulo 2 for slight performance edge
+                if ((exponent & 1) == 1)
+                {
+                    product *= value;
+                }
+
+                exponent >>= 1;
+                value *= value;
+            }
+
+            // Apply the last square
+            return product * value;
+        }
 
         /// <summary>
         /// Calculates the summation of natural numbers up to given value.
@@ -349,5 +388,25 @@ namespace Daviburg.Utilities
         /// <seealso href="https://msdn.microsoft.com/en-us/library/ms973852.aspx"/>
         /// </remarks>
         public static long CollatzSequenceNext(this long value) => (value & 1) == 0 ? value >> 1 : (value * 3) + 1;
+
+        public static IEnumerable<long> Divisors(this long value) =>
+            value
+                .BlendPrimeFactorization()
+                .Select(primeFactor => Enumerable.Range(1, primeFactor.Exponent).Select(exponent => primeFactor.Base.Power(exponent)).ToList())
+                .Aggregate(
+                    (existingProductList, additionalProductList) =>
+                        existingProductList
+                            .SelectMany(
+                                product =>
+                                    additionalProductList
+                                        .Select(additionalProduct => product * additionalProduct)
+                                        .Concat(new[] { product }))
+                            .Concat(additionalProductList)
+                            .ToList())
+            .Concat(new[] { (long)1 });
+
+        public static IEnumerable<long> ProperDivisors(this long value) => value.Divisors().Where(product => product != value);
+
+        public static long SumOfProperDivisors(this long value) => value.ProperDivisors().Aggregate((sumSoFar, nextValue) => sumSoFar + nextValue);
     }
 }

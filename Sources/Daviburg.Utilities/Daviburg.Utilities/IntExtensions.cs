@@ -117,5 +117,7 @@ namespace Daviburg.Utilities
 
             return factorial;
         }
+
+        public static long Power(this int value, int exponent) => ((long)value).Power(exponent);
     }
 }

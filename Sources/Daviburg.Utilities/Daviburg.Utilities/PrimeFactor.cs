@@ -22,7 +22,7 @@ namespace Daviburg.Utilities
     /// <summary>
     /// A prime factor, expressed by its order or by its prime number, and by its exponent
     /// </summary>
-    public class PrimeFactor : Power
+    public class PrimeFactor : IntegerPower
     {
         /// <summary>
         /// Initializes a <see cref="PrimeFactor"/> instance from the prime order and exponent.
@@ -30,7 +30,7 @@ namespace Daviburg.Utilities
         /// <param name="order">The prime order.</param>
         /// <param name="exponent">The exponent to apply to the prime.</param>
         // NOTE(daviburg): the primes table is zero-based while the order of primes starts at 1
-        public PrimeFactor(int order, double exponent): base(Primes.Singleton[order - 1], exponent)
+        public PrimeFactor(int order, int exponent): base(Primes.Singleton[order - 1], exponent)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Daviburg.Utilities
         /// </summary>
         /// <param name="baseNumber">The prime number.</param>
         /// <param name="exponent">The exponent to apply to the prime.</param>
-        public PrimeFactor(double baseNumber, double exponent) : base(baseNumber, exponent)
+        public PrimeFactor(long baseNumber, int exponent) : base(baseNumber, exponent)
         {
         }
     }

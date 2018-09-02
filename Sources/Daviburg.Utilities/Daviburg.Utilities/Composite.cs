@@ -49,12 +49,12 @@ namespace Daviburg.Utilities
         public IReadOnlyList<PrimeFactor> PrimeFactors { get;  private set; }
 
         public int CountOfDivisors => this.countofDivisors ??
-            (this.countofDivisors = this.PrimeFactors.Aggregate(1, (partialCount, primeFactor) => partialCount * (Convert.ToInt32(primeFactor.Exponent) + 1))).Value;
+            (this.countofDivisors = this.PrimeFactors.Aggregate(seed: 1, func: (partialCount, primeFactor) => partialCount * (primeFactor.Exponent + 1))).Value;
 
         public long Value => this.value ??
             (this.value = this.PrimeFactors.Aggregate(
                 seed: new Tuple<int, long>(0, 1),
-                func: (indexAndPartialProduct, primeFactor) => new Tuple<int, long>(indexAndPartialProduct.Item1 + 1, indexAndPartialProduct.Item2 * Convert.ToInt64(primeFactor.Value)),
+                func: (indexAndPartialProduct, primeFactor) => new Tuple<int, long>(indexAndPartialProduct.Item1 + 1, indexAndPartialProduct.Item2 * primeFactor.Value),
                 resultSelector: finalIndexAndProduct => finalIndexAndProduct.Item2))
             .Value;
 
