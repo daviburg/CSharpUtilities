@@ -22,6 +22,7 @@ namespace Daviburg.Utilities.Tests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.IO;
     using System.Linq;
     using System.Numerics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -225,6 +226,23 @@ namespace Daviburg.Utilities.Tests
         public void LargeFactorialSummationTests()
         {
             Console.WriteLine($"The sum of digits of the number factorial 100 is {Enumerable.Range(start: 3, count: 97).Aggregate(seed: new BigInteger(2), func: (current, multiplicator) => current * multiplicator).ToString().Aggregate(seed: 0, func: (partialSummation, digit) => partialSummation + digit.ToInt32())}.");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void WeighingOrderedNamesTest()
+        {
+            // @ is the character preceding A in the ascii table, which is valid also for Unicode Latin character range.
+            var sumOfNameScores = new SortedDictionary<string, int>(
+                dictionary: File
+                    .ReadAllText(@".\TestData\p022_names.txt")
+                    .Split(new[] { ',' })
+                    .Select(quotedName => quotedName.Trim(new[] { '"' }))
+                    .ToDictionary(name => name, name => name.Aggregate(seed: 0, func: (sum, character) => sum + (character - '@'))))
+                .Aggregate(seed: new Tuple<int, int>(1, 0), func: (indexAndSum, nameAndWorth) => new Tuple<int, int>(indexAndSum.Item1 + 1, indexAndSum.Item2 + nameAndWorth.Value * indexAndSum.Item1))
+                .Item2;
+
+            Console.WriteLine($"The total of all the name scores is {sumOfNameScores}.");
         }
     }
 }
