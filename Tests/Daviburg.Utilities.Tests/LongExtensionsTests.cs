@@ -23,6 +23,7 @@ namespace Daviburg.Utilities.Tests
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -248,6 +249,50 @@ namespace Daviburg.Utilities.Tests
             }
 
             Console.WriteLine($"The sum of all the amicable numbers under 10000 is {amicableList.Aggregate((sumSoFar, amicableNumber) => sumSoFar + amicableNumber)}.");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void NotAbundantSumSieveTests()
+        {
+            var abundantNumbersList = new List<int>();
+            var sumsOfAbundantNumbers = new bool[28124];
+
+            for (var testedNumber = 2; testedNumber < 28124; testedNumber++)
+            {
+                if (((long)testedNumber).SumOfProperDivisors() > testedNumber)
+                {
+                    abundantNumbersList.Add(testedNumber);
+                }
+            }
+
+            // The outer loop is parallel so the inner loop can be broken as soon as the upper limit is met.
+            Parallel.ForEach(
+                source: abundantNumbersList,
+                body: (abundantNumber) =>
+                {
+                    foreach (var otherAbundantNumber in abundantNumbersList)
+                    {
+                        var sum = abundantNumber + otherAbundantNumber;
+                        if (sum < 28124)
+                        {
+                            sumsOfAbundantNumbers[sum] = true;
+                        }
+                        else
+                            break;
+                    }
+                });
+
+            var sumOfNotASumOfAbundants = 0;
+            for (var testedNumber = 1; testedNumber < 28124; testedNumber++)
+            {
+                if (!sumsOfAbundantNumbers[testedNumber])
+                {
+                    sumOfNotASumOfAbundants += testedNumber;
+                }
+            }
+
+            Console.WriteLine($"The sum of all the positive integers which cannot be written as the sum of two abundant numbers is {sumOfNotASumOfAbundants}.");
         }
     }
 }
