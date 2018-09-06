@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daviburg.Utilities2", "..\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daviburg.Utilities2.Tests", "Daviburg.Utilities2.Tests\Daviburg.Utilities2.Tests.csproj", "{1AC0FE91-1E21-439C-93F1-977A8D7769C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daviburg.Recode", "Daviburg.Recode\Daviburg.Recode.csproj", "{9BBFBF81-A026-4122-B38F-C05D3C7598BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daviburg.Recode", "Daviburg.Recode\Daviburg.Recode.csproj", "{9BBFBF81-A026-4122-B38F-C05D3C7598BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daviburg.FixToXmlCharacters", "Daviburg.FixToXmlCharacters\Daviburg.FixToXmlCharacters.csproj", "{D3EFF063-EDA6-4A37-B866-497ED037917F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{9BBFBF81-A026-4122-B38F-C05D3C7598BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BBFBF81-A026-4122-B38F-C05D3C7598BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BBFBF81-A026-4122-B38F-C05D3C7598BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3EFF063-EDA6-4A37-B866-497ED037917F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EFF063-EDA6-4A37-B866-497ED037917F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EFF063-EDA6-4A37-B866-497ED037917F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EFF063-EDA6-4A37-B866-497ED037917F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

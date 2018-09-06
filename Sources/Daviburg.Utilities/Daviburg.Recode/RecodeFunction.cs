@@ -69,13 +69,14 @@ namespace Daviburg.Recode
                 return new BadRequestObjectResult($"Output char set value '{data.encodingOutput.Value}' is not supported. Supported value are listed at https://msdn.microsoft.com/en-us/library/system.text.encoding(v=vs.110).aspx.");
             }
 
-            string input = data.text;
-            var outputBytes = Encoding.Convert(srcEncoding: inputEncoding, dstEncoding: encodingOutput, bytes: Convert.FromBase64String(input));
-            
             return (ActionResult)new JsonResult(
                 value: new
                 {
-                    text = Convert.ToBase64String(outputBytes)
+                    text = Convert.ToBase64String(
+                        Encoding.Convert(
+                            srcEncoding: inputEncoding,
+                            dstEncoding: encodingOutput,
+                            bytes: Convert.FromBase64String((string)data.text)))
                 });
         }
     }
