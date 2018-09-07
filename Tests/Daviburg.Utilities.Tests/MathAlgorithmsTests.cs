@@ -244,5 +244,40 @@ namespace Daviburg.Utilities.Tests
 
             Console.WriteLine($"The total of all the name scores is {sumOfNameScores}.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PermutationsTests()
+        {
+            var goal = (long)1000000;
+            var countOfDigits = 10;
+            var remainingPermutations = goal;
+            var permutationsByOffset = new int[countOfDigits];
+
+            while (remainingPermutations > 1)
+            {
+                var offset = 1;
+                while (Factorials.Singleton[offset + 1] < remainingPermutations)
+                {
+                    offset++;
+                }
+
+                var permutationCountAtOffset = (int)((remainingPermutations - 1) / Factorials.Singleton[offset]);
+                permutationsByOffset[offset] = permutationCountAtOffset;
+                remainingPermutations -= permutationCountAtOffset * Factorials.Singleton[offset];
+            }
+
+            // NOTE: this could be simplified by turning it to a string right away, and pick the digits immediately in the previous loop instead.
+            var availableDigits = Enumerable.Range(start: 0, count: countOfDigits).ToList();
+            var nthPermutation = string.Empty;
+            for (var index = 1; index <= countOfDigits; index++)
+            {
+                var digitAtIndex = availableDigits[permutationsByOffset[countOfDigits - index]];
+                availableDigits.Remove(digitAtIndex);
+                nthPermutation += digitAtIndex.ToString();
+            }
+
+            Console.WriteLine($"The {goal}th permutation of 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9 is {nthPermutation}.");
+        }
     }
 }
