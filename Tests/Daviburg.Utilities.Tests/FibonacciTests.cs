@@ -19,6 +19,7 @@
 
 namespace Daviburg.Utilities.Tests
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -90,6 +91,21 @@ namespace Daviburg.Utilities.Tests
 
             // Next values are sanitized to not spoil some online challenge
             //// Assert.AreEqual(expected: (uint)*sanitized*, actual: Fibonacci.SumationOfEvenFibonacci(Fibonacci.ClosestInputForOutcome(4000000)));
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SmallestNumberForNDigitsFibonacciTests()
+        {
+            // This is https://oeis.org/A072354 with a padding 0 in front
+            var a072354Sequence = new uint[] { 0, 1, 7, 12, 17, 21, 26, 31, 36, 40, 45, 50, 55, 60, 64, 69, 74, 79, 84, 88, 93, 98, 103, 107, 112, 117, 122, 127, 131, 136, 141, 146, 151, 155, 160, 165, 170, 174, 179, 184, 189, 194, 198, 203, 208, 213, 217, 222, 227, 232, 237 };
+
+            for (uint value = 1; value < a072354Sequence.Length; value++)
+            {
+                Assert.AreEqual(expected: a072354Sequence[value], actual: Fibonacci.SmallestNumberForNDigitsFibonacci(value));
+            }
+
+            Console.WriteLine($"The first Fibonacci number with 1000 digits is of order {Fibonacci.SmallestNumberForNDigitsFibonacci(1000)}");
         }
     }
 }

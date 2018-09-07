@@ -52,5 +52,15 @@ namespace Daviburg.Utilities
 
             return sum;
         }
+
+        public static uint SmallestNumberForNDigitsFibonacci(uint digits)
+        {
+            if (digits == 1)
+            {
+                return 1;
+            }
+
+            return Convert.ToUInt32(Math.Ceiling((((digits - 1) * Math.Log(10)) + Math.Log(Fibonacci.lazyFiveSquareRoot.Value)) / Math.Log(Fibonacci.Varphi)));
+        }
     }
 }
