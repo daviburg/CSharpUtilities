@@ -166,5 +166,17 @@ namespace Daviburg.Utilities.Tests
                 Assert.AreEqual(Factorials.Singleton[value], value.Factorial(), $"Factorial of {value} differs between cached table {Factorials.Singleton[value]} and computed value {value.Factorial()}.");
             }
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void FractionDecimalPeriodLengthTests()
+        {
+            var a051626 = new[] { 0, 0, 1, 0, 0, 1, 6, 0, 1, 0, 2, 1, 6, 6, 1, 0, 16, 1, 18, 0, 6, 2, 22, 1, 0, 6, 3, 6, 28, 1, 15, 0, 2, 16, 6, 1, 3, 18, 6, 0, 5, 6, 21, 2, 1, 22, 46, 1, 42, 0, 16, 6, 13, 3, 2, 6, 18, 28, 58, 1, 60, 15, 6, 0, 6, 2, 33, 16, 22, 6, 35, 1, 8, 3, 1, 18, 6, 6, 13, 0, 9, 5, 41, 6, 16, 21, 28, 2, 44, 1 };
+
+            for (var index = 0; index < a051626.Length; index++)
+            {
+                Assert.AreEqual(expected: a051626[index], actual: (index + 1).FractionDecimalPeriodLength());
+            }
+        }
     }
 }

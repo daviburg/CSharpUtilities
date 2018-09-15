@@ -21,6 +21,8 @@ namespace Daviburg.Utilities
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Numerics;
 
     public static class IntExtensions
     {
@@ -119,5 +121,41 @@ namespace Daviburg.Utilities
         }
 
         public static long Power(this int value, int exponent) => ((long)value).Power(exponent);
+
+        /// <summary>
+        /// Length of the period of decimal representation of 1/n, or 0 if 1/n terminates.
+        /// </summary>
+        /// <param name="dividentOfOne">The value of n.</param>
+        /// <seealso href="https://oeis.org/A051626"/>
+        public static int FractionDecimalPeriodLength(this int dividentOfOne)
+        {
+            if (dividentOfOne < 3)
+            {
+                return 0;
+            }
+
+            // If the prime factors are only 2 and 5 then the decimal expansion of the fraction will terminate.
+            // Then there is no period and by convention the 'period length' is zero.
+            var primeFactorization = ((long)dividentOfOne).BlendPrimeFactorization();
+            if (!primeFactorization.Any(factor => factor.Base != 2 && factor.Base != 5))
+            {
+                return 0;
+            }
+
+            var leftPower = 1;
+            do
+            {
+                for (var rightPower = leftPower - 1; rightPower > -1; rightPower--)
+                {
+                    if ((BigInteger.Pow(new BigInteger(10), leftPower) - BigInteger.Pow(new BigInteger(10), rightPower)) % dividentOfOne == 0)
+                    {
+                        return leftPower - rightPower;
+                    }
+                }
+
+                leftPower++;
+            }
+            while (true);
+        }
     }
 }

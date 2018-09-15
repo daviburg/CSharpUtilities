@@ -279,5 +279,13 @@ namespace Daviburg.Utilities.Tests
 
             Console.WriteLine($"The {goal}th permutation of 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9 is {nthPermutation}.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void LongestRecurringCycleTests()
+        {
+            // This is the same as looking for the largest long period prime below 1k, see https://oeis.org/A006883
+            Console.WriteLine($"The longest recurring cycle is for the unit fraction 1/{Enumerable.Range(1, 999).Reverse().First(divident => ((long)divident).IsPrime() && (divident.FractionDecimalPeriodLength() == divident - 1))}.");
+        }
     }
 }
