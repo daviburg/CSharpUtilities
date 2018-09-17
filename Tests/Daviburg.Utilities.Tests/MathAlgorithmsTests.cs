@@ -287,5 +287,82 @@ namespace Daviburg.Utilities.Tests
             // This is the same as looking for the largest long period prime below 1k, see https://oeis.org/A006883
             Console.WriteLine($"The longest recurring cycle is for the unit fraction 1/{Enumerable.Range(1, 999).Reverse().First(divident => ((long)divident).IsPrime() && (divident.FractionDecimalPeriodLength() == divident - 1))}.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PrimeValueFamilyTests()
+        {
+            var primeIndex = 0;
+            var familySize = 0;
+            for (; familySize != 8; primeIndex++)
+            {
+                var prime = Primes.Singleton[primeIndex];
+                var size = Convert.ToInt32(Math.Ceiling(Math.Log10(prime + 1)));
+
+                // The possible replacement spots for the prime value family can be expressed as a bitmask,
+                // i.e. for a prime of 3 digits the possible replacement spots are 001, 010, 011, 100, etc...
+                // The count of them been 2^n - 1.
+                var combinationsCount = (1 << size) - 1;
+                for (var bitmask = 1; bitmask <= combinationsCount && familySize != 8; bitmask++)
+                {
+                    // The source prime must have the same digit at all positions replaced
+                    var validBitmask = true;
+                    var multiplier = 1;
+                    var commonDigit = -1;
+                    for (var maskPosition = bitmask; maskPosition != 0; maskPosition >>= 1, multiplier *= 10)
+                    {
+                        if ((maskPosition & 1) == 1)
+                        {
+                            var digitAtPosition = Convert.ToInt32((prime / multiplier) % 10);
+                            commonDigit = (commonDigit == -1) ? digitAtPosition : commonDigit;
+                            if (commonDigit != digitAtPosition)
+                            {
+                                validBitmask = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!validBitmask)
+                    {
+                        continue;
+                    }
+
+                    ////Console.WriteLine($"Begin bitmask {bitmask}.");
+                    familySize = 0;
+
+                    for (var replacementDigit = 0; replacementDigit < 10; replacementDigit++)
+                    {
+                        // Special case: the first digit is not allowed to be replaced by 0, as the problem description
+                        // first example excludes 03 prime number from 2-digit number *3, i.e. the count of digits must remain the same
+                        if (replacementDigit == 0 && (bitmask & (1 << (size - 1))) != 0)
+                        {
+                            continue;
+                        }
+
+                        var testValue = prime;
+                        multiplier = 1;
+                        for (var maskPosition = bitmask; maskPosition != 0; maskPosition >>= 1, multiplier *= 10)
+                        {
+                            if ((maskPosition & 1) == 1)
+                            {
+                                // Replace the digit at the position
+                                testValue += (replacementDigit - ((testValue / multiplier) % 10)) * multiplier;
+                            }
+                        }
+
+                        if (testValue.IsPrime())
+                        {
+                            familySize++;
+                            ////Console.WriteLine($"{testValue}");
+                        }
+                    }
+
+                    ////Console.WriteLine();
+                }
+            }
+            
+            Console.WriteLine($"The first prime with a family of 8 is {Primes.Singleton[primeIndex - 1]} for index {primeIndex - 1}.");
+        }
     }
 }
