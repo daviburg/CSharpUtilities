@@ -20,13 +20,15 @@
 namespace Daviburg.Utilities
 {
     using System;
+    using System.Numerics;
 
     /// <summary>
     /// A integer base number raised by an integer exponent with JIT value computation, and custom comparison.
     /// </summary>
-    public class IntegerPower
+    public class IntegerPower : IEquatable<IntegerPower>
     {
         private long? value;
+        private BigInteger? bigValue;
 
         /// <summary>
         /// Instantiate a <see cref="Power"/>
@@ -45,6 +47,8 @@ namespace Daviburg.Utilities
         public int Exponent { get; private set; }
 
         public long Value => (value ?? (value = this.Base.Power(this.Exponent))).Value;
+
+        public BigInteger BigValue => (bigValue ?? (bigValue = BigInteger.Pow(this.Base, this.Exponent))).Value;
 
         public override bool Equals(Object otherObject)
         {

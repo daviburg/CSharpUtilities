@@ -399,5 +399,13 @@ namespace Daviburg.Utilities.Tests
             var n = 1001 / 2;
             Console.WriteLine($"The sum of the diagonals in a 1001 by 1001 spiral of integers is {1 + 10 * n * n + (16 * n * n * n + 26 * n) / 3 }.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void HundredsCombinations()
+        {
+            var range = Enumerable.Range(2, 99).ToList();
+            Console.WriteLine($"The sequence of powers has {range.SelectMany(baseValue => range.Select(exponent => new IntegerPower(baseValue, exponent))).Distinct(IntegerPowerValueComparer.Singleton).Count()} distinct values.");
+        }
     }
 }

@@ -59,6 +59,7 @@ namespace Daviburg.Utilities
         public override int GetHashCode()
         {
             // NOTE(daviburg): It is unnecessary to compare the actual values as they are determined by the base and exponent.
+            // Also two different powers may have save value, e.g. 2^4 has the same value (16) as 4^2.
             return this.Base.GetHashCode() ^ this.Exponent.GetHashCode();
         }
 
