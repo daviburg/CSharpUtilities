@@ -364,5 +364,31 @@ namespace Daviburg.Utilities.Tests
             
             Console.WriteLine($"The first prime with a family of 8 is {Primes.Singleton[primeIndex - 1]} for index {primeIndex - 1}.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void QuadraticPrimesTests()
+        {
+            var maximumQuadraticPrimes = 40;
+            var abCoefficentProduct = 41;
+            for (var coefficientA = -999; coefficientA < 1000; coefficientA++)
+            {
+                for (var coefficientB = -1000; coefficientB <= 1000; coefficientB++)
+                {
+                    var n = 0;
+                    for (; (((long)n * n) + coefficientA * n + coefficientB).IsPrime(); n++)
+                    {
+                    }
+
+                    if (n > maximumQuadraticPrimes)
+                    {
+                        maximumQuadraticPrimes = n;
+                        abCoefficentProduct = coefficientA * coefficientB;
+                    }
+                }
+            }
+
+            Console.WriteLine($"The product of coefficients that produces the maximum number of quadratic primes is {abCoefficentProduct} for {maximumQuadraticPrimes} primes.");
+        }
     }
 }
