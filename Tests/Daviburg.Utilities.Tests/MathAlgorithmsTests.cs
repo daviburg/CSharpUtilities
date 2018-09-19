@@ -290,7 +290,7 @@ namespace Daviburg.Utilities.Tests
 
         [TestMethod]
         [ExcludeFromCodeCoverage]
-        public void PrimeValueFamilyTests()
+        public void PrimeValueFamilyTest()
         {
             var primeIndex = 0;
             var familySize = 0;
@@ -367,7 +367,7 @@ namespace Daviburg.Utilities.Tests
 
         [TestMethod]
         [ExcludeFromCodeCoverage]
-        public void QuadraticPrimesTests()
+        public void QuadraticPrimesTest()
         {
             var maximumQuadraticPrimes = 40;
             var abCoefficentProduct = 41;
@@ -389,6 +389,15 @@ namespace Daviburg.Utilities.Tests
             }
 
             Console.WriteLine($"The product of coefficients that produces the maximum number of quadratic primes is {abCoefficentProduct} for {maximumQuadraticPrimes} primes.");
+        }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void SumOfDiagonalsFromIntegerSpiral()
+        {
+            // This one really didn't need any program, just recording for the sake of it.
+            var n = 1001 / 2;
+            Console.WriteLine($"The sum of the diagonals in a 1001 by 1001 spiral of integers is {1 + 10 * n * n + (16 * n * n * n + 26 * n) / 3 }.");
         }
     }
 }
