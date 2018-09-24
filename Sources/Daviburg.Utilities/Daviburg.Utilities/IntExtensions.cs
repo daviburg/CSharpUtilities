@@ -157,5 +157,18 @@ namespace Daviburg.Utilities
             }
             while (true);
         }
+
+        public static int Log10(this int value) => 
+            (value < 0) ? throw new ArgumentOutOfRangeException("Zero and negative input is out of range. Logarithm function is only defined for positive numbers.")
+            : (value >= 1000000000) ? 9 
+            : (value >= 100000000) ? 8 
+            : (value >= 10000000) ? 7
+            : (value >= 1000000) ? 6
+            : (value >= 100000) ? 5
+            : (value >= 10000) ? 4
+            : (value >= 1000) ? 3
+            : (value >= 100) ? 2
+            : (value >= 10) ? 1
+            : 0;
     }
 }

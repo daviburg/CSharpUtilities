@@ -22,6 +22,8 @@ namespace Daviburg.Utilities2
     using Daviburg.Utilities;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public static class MathAlgorithms2
     {
@@ -111,6 +113,27 @@ namespace Daviburg.Utilities2
             }
 
             return maximumLength;
+        }
+
+        public static long SumOfPowerDigitsSumEquals(int exponent)
+        {
+            long sumOfEqualPowerDigitsSum = 0;
+
+            Parallel.For<long>(
+                fromInclusive: 2,
+                toExclusive: (PowerDigitsSingletons.Singleton[exponent][9].Log10() + 2) * PowerDigitsSingletons.Singleton[exponent][9],
+                localInit: () => 0,
+                body: (index, loop, subtotal) =>
+                    subtotal += index.PowerDigitsSum(exponent) == index ? index : (long)0,
+                localFinally: x =>
+                {
+                    if (x != 0)
+                    {
+                        Interlocked.Add(ref sumOfEqualPowerDigitsSum, x);
+                    }
+                });
+
+            return sumOfEqualPowerDigitsSum;
         }
     }
 }

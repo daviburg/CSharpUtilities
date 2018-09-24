@@ -80,5 +80,13 @@ namespace Daviburg.Utilities2.Tests
             var theSecret = MathAlgorithms2.LongestCollatzSequenceStartingNumber2(1000000);
             Console.WriteLine($"The longest Collatz sequence with a starting number less than one million starts with {theSecret.Item1} with a lenght of {theSecret.Item2} elements.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void PowerDigitsSumEqualityTests()
+        {
+            Assert.AreEqual(expected: 19316, actual: MathAlgorithms2.SumOfPowerDigitsSumEquals(4));
+            Console.WriteLine($"The sum of all the numbers that can be written as the sum of {5}th powers of their digits is {MathAlgorithms2.SumOfPowerDigitsSumEquals(5)}.");
+        }
     }
 }

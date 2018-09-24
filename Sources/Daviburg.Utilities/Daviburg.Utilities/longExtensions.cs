@@ -336,13 +336,13 @@ namespace Daviburg.Utilities
 
             if (value < 1373653)
             {
-                return LongExtensions.WitnessTest(value, powersOfTwo, factor, 2) && 
+                return LongExtensions.WitnessTest(value, powersOfTwo, factor, 2) &&
                     LongExtensions.WitnessTest(value, powersOfTwo, factor, 3);
             }
 
             if (value < 9080191)
             {
-                return LongExtensions.WitnessTest(value, powersOfTwo, factor, 31) && 
+                return LongExtensions.WitnessTest(value, powersOfTwo, factor, 31) &&
                     LongExtensions.WitnessTest(value, powersOfTwo, factor, 73);
             }
 
@@ -408,5 +408,35 @@ namespace Daviburg.Utilities
         public static IEnumerable<long> ProperDivisors(this long value) => value.Divisors().Where(product => product != value);
 
         public static long SumOfProperDivisors(this long value) => value.ProperDivisors().Aggregate((sumSoFar, nextValue) => sumSoFar + nextValue);
+
+        public static int CountOfDigits(this long value) => value == 1 ? 1 : (value - 1).Log10() + 1;
+
+        public static long PowerDigitsSum(this long value, int exponent)
+        {
+            var countOfDigits = value.CountOfDigits();
+            long multiplier = 1;
+            long sum = 0;
+            for (var index = 1; index <= countOfDigits; multiplier *= 10, index++)
+            {
+                var digitAtPosition = Convert.ToInt32((value / multiplier) % 10);
+                sum += PowerDigitsSingletons.Singleton[exponent][digitAtPosition];
+            }
+
+            return sum;
+        }
+
+        public static int Log10(this long value) =>
+            (value < 0) ? throw new ArgumentOutOfRangeException("Zero and negative input is out of range. Logarithm function is only defined for positive numbers.")
+            : (value >= 1000000000000000000) ? 18
+            : (value >= 100000000000000000) ? 17
+            : (value >= 10000000000000000) ? 16
+            : (value >= 1000000000000000) ? 15
+            : (value >= 100000000000000) ? 14
+            : (value >= 10000000000000) ? 13
+            : (value >= 1000000000000) ? 12
+            : (value >= 100000000000) ? 11
+            : (value >= 10000000000) ? 10
+            : (value >= 1000000000) ? 9
+            : ((int)value).Log10();
     }
 }
