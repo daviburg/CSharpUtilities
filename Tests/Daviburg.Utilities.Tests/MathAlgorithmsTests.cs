@@ -407,5 +407,14 @@ namespace Daviburg.Utilities.Tests
             var range = Enumerable.Range(2, 99).ToList();
             Console.WriteLine($"The sequence of powers has {range.SelectMany(baseValue => range.Select(exponent => new IntegerPower(baseValue, exponent))).Distinct(IntegerPowerValueComparer.Singleton).Count()} distinct values.");
         }
+
+        [TestMethod]
+        [ExcludeFromCodeCoverage]
+        public void OrderedCombinationsOfCoins()
+        {
+            var coins = (new[] { 200, 100, 50, 20, 10, 5, 2, 1 }).Reverse().ToList();
+            const int targetSum = 200;
+            Console.WriteLine($"There are {MathAlgorithms.OrderedCombinationsOfCoins(targetSum, new Stack<int>(coins))} distinct ways of making {targetSum} with coins of denominations {string.Join(", ", coins)}.");
+        }
     }
 }

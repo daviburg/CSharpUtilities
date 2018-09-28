@@ -20,6 +20,8 @@
 namespace Daviburg.Utilities
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public static class MathAlgorithms
     {
@@ -205,6 +207,46 @@ namespace Daviburg.Utilities
             }
 
             return coefficient;
+        }
+
+        private static Dictionary<int, int> learntCoinCombinations = new Dictionary<int, int>();
+
+        /// <summary>
+        /// Calculates the count of unique ways of making a target sum given set of coins denominations
+        /// </summary>
+        /// <param name="targetSum">The target sum.</param>
+        /// <param name="coins">The coins denominations available.</param>
+        /// <returns>The count of unique ways of making the target sum.</returns>
+        public static int OrderedCombinationsOfCoins(int targetSum, Stack<int> coins)
+        {
+            if (coins.Count == 1)
+            {
+                return (targetSum % coins.Peek()) == 0 ? 1 : 0;
+            }
+
+            var hash = (targetSum.GetHashCode() * 769) ^ coins.ToArray().Aggregate((partialHash, coinToHash) => (partialHash * 769) ^ coinToHash);
+            if (learntCoinCombinations.TryGetValue(hash, out int countOfOrderedCombinations))
+            {
+                return countOfOrderedCombinations;
+            }
+
+            var coin = coins.Pop();
+
+            var runningSum = 0;
+            while (runningSum < targetSum)
+            {
+                countOfOrderedCombinations += OrderedCombinationsOfCoins(targetSum - runningSum, coins);
+                runningSum += coin;
+            }
+
+            if (runningSum == targetSum)
+            {
+                countOfOrderedCombinations++;
+            }
+
+            coins.Push(coin);
+            learntCoinCombinations.Add(hash, countOfOrderedCombinations);
+            return countOfOrderedCombinations;
         }
     }
 }
