@@ -219,11 +219,13 @@ namespace Daviburg.Utilities
         /// <returns>The count of unique ways of making the target sum.</returns>
         public static int OrderedCombinationsOfCoins(int targetSum, Stack<int> coins)
         {
+            // When only a single coin denomination remains, check if we can make the target sum with such coins.
             if (coins.Count == 1)
             {
                 return (targetSum % coins.Peek()) == 0 ? 1 : 0;
             }
 
+            // Compute a hash of the target and coins denominations to check if we've learnt this result yet.
             var hash = (targetSum.GetHashCode() * 769) ^ coins.ToArray().Aggregate((partialHash, coinToHash) => (partialHash * 769) ^ coinToHash);
             if (learntCoinCombinations.TryGetValue(hash, out int countOfOrderedCombinations))
             {
@@ -235,7 +237,7 @@ namespace Daviburg.Utilities
             var runningSum = 0;
             while (runningSum < targetSum)
             {
-                countOfOrderedCombinations += OrderedCombinationsOfCoins(targetSum - runningSum, coins);
+                countOfOrderedCombinations += MathAlgorithms.OrderedCombinationsOfCoins(targetSum - runningSum, coins);
                 runningSum += coin;
             }
 
